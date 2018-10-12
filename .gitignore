@@ -1,0 +1,6 @@
+*.suo
+*.user
+*.dtbcache
+.vs
+**/bin/
+**/obj/
