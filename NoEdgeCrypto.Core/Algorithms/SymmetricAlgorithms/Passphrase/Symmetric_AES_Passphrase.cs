@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Security.Cryptography;
 
 namespace NoEdgeCrypto.Core.Algorithms.SymmetricAlgorithms.Passphrase
@@ -26,7 +27,7 @@ namespace NoEdgeCrypto.Core.Algorithms.SymmetricAlgorithms.Passphrase
         {
             if (inputStream == null || outputStream == null)
             {
-                return;
+                throw new ArgumentNullException();
             }
 
             byte[] salt;

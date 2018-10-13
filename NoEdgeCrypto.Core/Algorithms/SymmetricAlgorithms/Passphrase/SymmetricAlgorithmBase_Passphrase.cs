@@ -64,7 +64,7 @@ namespace NoEdgeCrypto.Core.Algorithms.SymmetricAlgorithms.Passphrase
         {
             if (!allowOverwrite && File.Exists(outputFile))
             {
-                throw new ArgumentException("Output file already exists");
+                throw new IOException("Output file already exists");
             }
 
             if (File.Exists(outputFile))
@@ -118,13 +118,13 @@ namespace NoEdgeCrypto.Core.Algorithms.SymmetricAlgorithms.Passphrase
             }
         }
 
-        public DecryptionResults DecryptString(string input, string passphrase, Encoding encoding = null)
+        public DecryptionResults DecryptBase64(string input, string passphrase)
         {
-            if (encoding == null)
+            if (input == null)
             {
-                encoding = Defaults.Encoding;
+                return new DecryptionResults(null);
             }
-            byte[] inputBytes = encoding.GetBytes(input);
+            byte[] inputBytes = Convert.FromBase64String(input);
             return DecryptBytes(inputBytes, passphrase);
         }
 

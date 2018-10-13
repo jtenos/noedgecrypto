@@ -54,7 +54,7 @@ namespace NoEdgeSoftware.Cryptography.Tests.Algorithms
             }
             else
             {
-                Assert.IsTrue(encrypted.Length >=numBytes, "encrypted.Length");
+                Assert.IsTrue(encrypted.Length >= numBytes, "encrypted.Length");
                 Assert.IsTrue(decrypted.SequenceEqual(input), "Decrypted does not match original.");
             }
         }
@@ -92,7 +92,7 @@ namespace NoEdgeSoftware.Cryptography.Tests.Algorithms
             }
             else
             {
-                Assert.IsTrue(encrypted.Length >=input.Length, "encrypted.Length");
+                Assert.IsTrue(encrypted.Length >= input.Length, "encrypted.Length");
                 Assert.IsTrue(decrypted.SequenceEqual(input), "Decrypted does not match original.");
             }
         }
@@ -139,17 +139,32 @@ namespace NoEdgeSoftware.Cryptography.Tests.Algorithms
                 {
                     using (var algorithm = new Symmetric_AES_ECB_Passphrase())
                     {
-                        algorithm.EncryptStream(inputStream, outputStream, passphrase);
-                    }
-                    if (numBytes.HasValue)
-                    {
-                        encrypted = outputStream.ToArray();
-                        Assert.IsTrue(encrypted.Length >=numBytes, "encrypted.Length");
-                    }
-                    else
-                    {
-                        Assert.IsNull(inputStream, "inputStream");
-                        Assert.IsNull(outputStream, "outputStream");
+                        try
+                        {
+                            algorithm.EncryptStream(inputStream, outputStream, passphrase);
+                            if (numBytes.HasValue)
+                            {
+                                encrypted = outputStream.ToArray();
+                                Assert.IsTrue(encrypted.Length >= numBytes, "encrypted.Length");
+                            }
+                            else
+                            {
+                                Assert.Fail("Should have thrown exception");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            if (numBytes.HasValue)
+                            {
+                                Assert.Fail("Should not have thrown exception");
+                            }
+                            else
+                            {
+                                Assert.IsNull(inputStream, "inputStream");
+                                Assert.IsNull(outputStream, "outputStream");
+                            }
+
+                        }
                     }
                 }
             }

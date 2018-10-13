@@ -45,8 +45,8 @@ namespace NoEdgeSoftware.Cryptography.Tests.Algorithms
         public void TestZeroBytes()
         {
             var input = new byte[0];
-            byte[] encrypted = _symmetric.EncryptBytes(input, _key);
-            Assert.IsTrue(encrypted.Length > 32, "encrypted.Length");
+            byte[] encrypted = _symmetric.EncryptBytes(input, _key).AsBytes();
+            Assert.IsTrue(encrypted.Length >= 32, "encrypted.Length");
             byte[] decrypted = _symmetric.DecryptBytes(encrypted, _key);
             Assert.AreEqual(0, decrypted.Length, "decrypted.Length");
         }

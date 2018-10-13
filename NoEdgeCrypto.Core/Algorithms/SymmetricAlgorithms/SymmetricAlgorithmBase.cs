@@ -77,7 +77,7 @@ namespace NoEdgeCrypto.Core.Algorithms.SymmetricAlgorithms
         {
             if (!allowOverwrite && File.Exists(outputFile))
             {
-                throw new ArgumentException("Output file already exists");
+                throw new IOException("Output file already exists");
             }
 
             if (File.Exists(outputFile))
@@ -133,6 +133,10 @@ namespace NoEdgeCrypto.Core.Algorithms.SymmetricAlgorithms
 
         public DecryptionResults DecryptBase64(string input, byte[] key)
         {
+            if (input == null)
+            {
+                return new DecryptionResults(null);
+            }
             byte[] inputBytes = Convert.FromBase64String(input);
             return DecryptBytes(inputBytes, key);
         }

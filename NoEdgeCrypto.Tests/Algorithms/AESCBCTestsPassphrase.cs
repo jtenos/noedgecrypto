@@ -35,7 +35,7 @@ namespace NoEdgeSoftware.Cryptography.Tests.Algorithms
         {
             var input = new byte[0];
             byte[] encrypted = _symmetric.EncryptBytes(input, _passphrase);
-            Assert.IsTrue(encrypted.Length > 64, "encrypted.Length");
+            Assert.IsTrue(encrypted.Length >= 32, "encrypted.Length");
 
             byte[] decrypted = _symmetric.DecryptBytes(encrypted, _passphrase);
             Assert.AreEqual(0, decrypted.Length, "decrypted.Length");
@@ -46,7 +46,7 @@ namespace NoEdgeSoftware.Cryptography.Tests.Algorithms
         {
             byte[] input = SecureRandomizer.GetRandomBytes(1);
             byte[] encrypted = _symmetric.EncryptBytes(input, _passphrase);
-            Assert.IsTrue(encrypted.Length > 48, "encrypted.Length");
+            Assert.IsTrue(encrypted.Length >= 32, "encrypted.Length");
 
             byte[] decrypted = _symmetric.DecryptBytes(encrypted, _passphrase);
             Assert.IsTrue(input.SequenceEqual(decrypted), string.Format("{0} | {1}",
@@ -58,7 +58,7 @@ namespace NoEdgeSoftware.Cryptography.Tests.Algorithms
         {
             byte[] input = SecureRandomizer.GetRandomBytes(100);
             byte[] encrypted = _symmetric.EncryptBytes(input, _passphrase);
-            Assert.IsTrue(encrypted.Length > 100, "encrypted.Length");
+            Assert.IsTrue(encrypted.Length >= 32, "encrypted.Length");
 
             byte[] decrypted = _symmetric.DecryptBytes(encrypted, _passphrase);
             Assert.IsTrue(input.SequenceEqual(decrypted), string.Format("{0} | {1}",
@@ -181,7 +181,7 @@ namespace NoEdgeSoftware.Cryptography.Tests.Algorithms
                 }
             }
 
-            Assert.IsTrue(encrypted.Length > 64, "encrypted.Length");
+            Assert.IsTrue(encrypted.Length >=32, "encrypted.Length");
 
             byte[] decrypted;
             using (var inputStream = new MemoryStream(encrypted))
@@ -224,7 +224,7 @@ namespace NoEdgeSoftware.Cryptography.Tests.Algorithms
             var encryptedFile = new FileInfo(encryptedFileName);
             var decryptedFile = new FileInfo(decryptedFileName);
 
-            Assert.IsTrue(encryptedFile.Length > 64, "encryptedFile.Length");
+            Assert.IsTrue(encryptedFile.Length >= 32, "encryptedFile.Length");
             Assert.AreEqual(0, decryptedFile.Length, "encryptedFile.Length");
         }
 
@@ -296,7 +296,7 @@ namespace NoEdgeSoftware.Cryptography.Tests.Algorithms
             string encrypted = _symmetric.EncryptString(input, _passphrase).AsBase64();
             Assert.IsTrue(encrypted.Length > 100, "encrypted.Length");
 
-            string decrypted = _symmetric.DecryptString(encrypted, _passphrase).AsString();
+            string decrypted = _symmetric.DecryptBase64(encrypted, _passphrase).AsString();
             Assert.AreEqual(input, decrypted, string.Format("{0} | {1}", input, decrypted));
         }
 
@@ -307,7 +307,7 @@ namespace NoEdgeSoftware.Cryptography.Tests.Algorithms
             string encrypted = _symmetric.EncryptString(input, _passphrase).AsBase64();
             Assert.IsTrue(encrypted.Length > 100, "encrypted.Length");
 
-            string decrypted = _symmetric.DecryptString(encrypted, _passphrase).AsString();
+            string decrypted = _symmetric.DecryptBase64(encrypted, _passphrase).AsString();
             Assert.AreEqual(input, decrypted, string.Format("{0} | {1}", input, decrypted));
         }
 
@@ -315,9 +315,9 @@ namespace NoEdgeSoftware.Cryptography.Tests.Algorithms
         public void TestEmptyString()
         {
             string input = string.Empty;
-            string encrypted = _symmetric.EncryptString(input, _passphrase).AsBase64();
-            Assert.IsTrue(encrypted.Length > 64, "encrypted.Length");
-            string decrypted = _symmetric.DecryptString(encrypted, _passphrase).AsString();
+            string encryptedBase64 = _symmetric.EncryptString(input, _passphrase).AsBase64();
+            Assert.IsTrue(encryptedBase64.Length >=32, "encrypted.Length");
+            string decrypted = _symmetric.DecryptBase64(encryptedBase64, _passphrase).AsString();
             Assert.AreEqual(input, decrypted, string.Format("{0} | {1}", input, decrypted));
         }
 
@@ -357,7 +357,7 @@ namespace NoEdgeSoftware.Cryptography.Tests.Algorithms
             string encrypted = _symmetric.EncryptString(null, _passphrase).AsBase64();
             Assert.IsNull(encrypted, "encrypted");
 
-            string decrypted = _symmetric.DecryptString(null, _passphrase).AsString();
+            string decrypted = _symmetric.DecryptBase64(null, _passphrase).AsString();
             Assert.IsNull(decrypted, "decrypted");
         }
 
