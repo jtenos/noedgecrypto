@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package>
+    <metadata>
+        <id>NoEdgeCrypto</id>
+        <title>No Edge Software - Cryptography</title>
+        <version>0.1-alpha</version>
+        <authors>Joe Enos</authors>
+        <owners>No Edge Software LLC</owners>
+        <projectUrl>https://noedgesoftware.com/</projectUrl>
+        <!--<iconUrl>http://www.noedgesoftware.com/icon.png(32x32)</iconUrl>-->
+        <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Basic cryptography functions</description>
+        <releaseNotes>Based on NoEdgeSoftware.Cryptography. This version is back in development, so the API is not guaranteed, and will likely change at version 1.0. RSA encryption has been removed in this version.</releaseNotes>
+        <copyright>Copyright 2018 No Edge Software LLC</copyright>
+        <tags>cryptography</tags>
+        <dependencies>
+            <group targetFramework="netstandard2.0">
+                <dependency id="Newtonsoft.Json" version="11.0.2"/>
+            </group>
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="NoEdgeCrypto.Core\bin\Debug\netstandard2.0\NoEdgeCrypto.Core.dll" target="lib\netstandard2.0\NoEdgeCrypto.Core.dll"/>
+    </files>
+</package>
